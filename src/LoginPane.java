@@ -3,19 +3,17 @@ import java.awt.*;
 
 
 public class LoginPane extends JPanel{
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    private final JTextField usernameField;
+    private final JPasswordField passwordField;
     JButton LoginButton;
     JButton goToRegisterButton;
 
-    CardLayout cardLayout;
-    JPanel cards;
     public LoginPane(CardLayout cardLayout, JPanel cards) {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        this.usernameField = new JTextField(10);
-        this.passwordField = new JPasswordField(10);
+        this.usernameField = new JTextField(20);
+        this.passwordField = new JPasswordField(20);
         this.LoginButton = new JButton("Iniciar sesion");
         this.goToRegisterButton = new JButton("Registrarse");
 
@@ -32,6 +30,17 @@ public class LoginPane extends JPanel{
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         add(LoginButton, gbc);
+        LoginButton.addActionListener(e -> {
+            Login login = new Login(usernameField.getText(),passwordField.getText());
+            if(login.isUserValid()){
+                cardLayout.show(cards, "Productos");
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+            }
+        });
         add(goToRegisterButton, gbc);
+        goToRegisterButton.addActionListener(e -> {
+            cardLayout.show(cards, "register");
+        });
     }
 }

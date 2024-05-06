@@ -4,25 +4,26 @@ import java.sql.PreparedStatement;
 
 public class Register implements Runnable{
     String username;
-    String password;
-    JButton registerButton;
-    JButton goToLoginButton;
+    String email;
+    String contra;
 
-    public Register(String username, String password) {
+    public Register(String username, String email,String contra) {
         this.username = username;
-        this.password = password;
+        this.email = email;
+        this.contra = contra;
     }
 
     @Override
     public void run() {
         try {
             Connection connection = Singleton.getInstance().getConnection();
-            PreparedStatement stm = connection.prepareStatement("INSERT INTO Usuarios(UsuarioID, Nombre, Password) VALUES (?, ?, ?)");
-            stm.setInt(1, 0);
+            PreparedStatement stm = connection.prepareStatement("INSERT INTO Usuarios(UsuarioID, Nombre, Email,Contra) VALUES (?, ?, ?, ?)");
+            stm.setNull(1, java.sql.Types.INTEGER);
             stm.setString(2, username);
-            stm.setString(3, password);
+            stm.setString(3, email);
+            stm.setString(4, contra);
+            stm.executeUpdate();
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
-
         }catch (Exception e){
             throw new RuntimeException(e);
         }

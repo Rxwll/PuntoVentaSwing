@@ -13,20 +13,14 @@ public class MainFrame extends JFrame {
         initializeUI();
     }
 
-    public JPanel getCards() {
-        return cards;
-    }
-
-   public CardLayout getCardLayout() {
-        return cardLayout;
-    }
-
     public void initializeUI(){
         RegisterPane registerPane = new RegisterPane(cardLayout, cards);
         LoginPane loginPane = new LoginPane(cardLayout,cards);
+        TablePane tablePane = new TablePane(cardLayout,cards);
 
-        cards.add(registerPane, "register");
         cards.add(loginPane, "login");
+        cards.add(registerPane, "register");
+        cards.add(tablePane, "Productos");
 
         add(cards);
     }
